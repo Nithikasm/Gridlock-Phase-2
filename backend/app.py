@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
-
-from backend.recommendation_engine import generate_recommendations
+from recommendation_engine import generate_recommendations
 from pathlib import Path
 
 import pandas as pd
