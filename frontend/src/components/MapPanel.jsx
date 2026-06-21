@@ -44,11 +44,7 @@ setLocation({
   });
 }
 
-    console.log("Location Object:", {
-  latitude: lat,
-  longitude: lng,
-  police_station: policeResponse.data.police_station,
-});
+    
         },
       });
 
