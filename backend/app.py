@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 from math import radians, sin, cos, sqrt, atan2
 
-BASE_DIR = Path(__file__).resolve().parent
+
 
 
 # ------------------------
@@ -74,7 +74,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
