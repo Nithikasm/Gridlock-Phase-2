@@ -45,6 +45,9 @@ app = FastAPI(
     title="Bengaluru Police AI Traffic Command Center",
     version="1.0"
 )
+metadata_df = pd.read_csv(
+    "cleaned_astram_event_data_final.csv"
+)
 @app.get("/nearest-police-station")
 def nearest_police_station(lat: float, lon: float):
 
@@ -149,7 +152,7 @@ def predict(data: EventInput):
 
     return {
     "road_closure_probability": round(float(probability), 3),
-    "recommendation": recommendation
+    "recommendation": recommendation,
     }
 
 # ------------------------
@@ -197,4 +200,34 @@ def metadata():
             "Central",
             "Unknown"
         ]
+    }
+@app.get("/metadata/police-stations")
+def get_police_stations():
+
+    stations = (
+        metadata_df["police_station"]
+        .dropna()
+        .astype(str)
+        .sort_values()
+        .unique()
+        .tolist()
+    )
+
+    return {
+        "police_stations": stations
+    }
+@app.get("/metadata/corridors")
+def get_corridors():
+
+    corridors = (
+        metadata_df["corridor"]
+        .dropna()
+        .astype(str)
+        .sort_values()
+        .unique()
+        .tolist()
+    )
+
+    return {
+        "corridors": corridors
     }

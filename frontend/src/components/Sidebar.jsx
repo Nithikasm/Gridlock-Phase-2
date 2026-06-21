@@ -11,31 +11,22 @@ import {
 const menu = [
     {
         name: "Dashboard",
-        icon: LayoutDashboard
+        target: "dashboard-top",
+        icon: LayoutDashboard,
     },
     {
-        name: "New Assessment",
-        icon: ClipboardList
+        name: "Assessment",
+        target: "assessment-section",
+        icon: ClipboardList,
     },
     {
         name: "History",
-        icon: History
+        target: "history-section",
+        icon: History,
     },
-    {
-        name: "Analytics",
-        icon: BarChart3
-    },
-    {
-        name: "Settings",
-        icon: Settings
-    },
-    {
-        name: "About",
-        icon: Info
-    }
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ activeSection, setActiveSection }) => {
     return (
         <aside className="w-64 bg-white border-r border-[#D6DCE5] h-full">
 
@@ -49,6 +40,14 @@ const Sidebar = () => {
 
                         <button
                             key={item.name}
+                            onClick={() => {
+                                document
+                                    .getElementById(item.target)
+                                    ?.scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "start",
+                                    });
+                            }}
                             className="w-full px-6 py-4 flex items-center gap-4 hover:bg-blue-50 transition text-gray-700 font-medium"
                         >
 

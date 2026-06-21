@@ -18,11 +18,13 @@ export default function Dashboard() {
     return (
 
         <DashboardLayout>
-
+            <div id="dashboard-top"></div>
             {/* KPI STRIP */}
-
-            <div className="grid grid-cols-4 gap-4 mb-5">
-
+            <div className="mb-5"></div>
+            <div
+                id="dashboard-top"
+                className="grid grid-cols-4 gap-4 mb-5"
+            >
                 <StatCard
                     title="Assessments"
                     value={history.length}
@@ -82,7 +84,7 @@ export default function Dashboard() {
             {/* FORM */}
 
             <div className="mb-5">
-
+    
                 <EventForm
 
                     location={location}
@@ -96,12 +98,9 @@ export default function Dashboard() {
             </div>
 
             {/* HISTORY */}
-
-            <HistoryTable
-
-                history={history}
-
-            />
+            <div id="history-section">
+                <HistoryTable history={history} />
+            </div>
 
         </DashboardLayout>
 

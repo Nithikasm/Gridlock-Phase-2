@@ -64,6 +64,28 @@ export default function EventForm({location,setPrediction,setHistory}) {
 
     };
 
+    const isFormComplete =
+    form.event_type &&
+    form.event_type !== "Event Type" &&
+
+    form.event_cause &&
+    form.event_cause !== "Event Cause" &&
+
+    form.priority &&
+    form.priority !== "Priority" &&
+
+    form.Day_of_Week &&
+    form.Day_of_Week !== "Day of Week" &&
+
+    form.zone &&
+    form.zone !== "Zone" &&
+
+    form.corridor &&
+    form.latitude &&
+    form.longitude &&
+    form.address &&
+    form.police_station;
+
     const submit = async () => {
 
     const payload = {
@@ -98,10 +120,11 @@ export default function EventForm({location,setPrediction,setHistory}) {
 
             <div className="border-b p-5">
 
-                <h2 className="text-2xl font-bold text-[#0B3C5D]">
-
+                <h2
+                    id="assessment-section"
+                    className="text-xl font-semibold text-gray-900"
+                >
                     Event Assessment Form
-
                 </h2>
 
                 <p className="text-sm text-gray-500 mt-1">
@@ -238,23 +261,36 @@ export default function EventForm({location,setPrediction,setHistory}) {
                                 <option key={x}>{x}</option>
                             )}
 
-                        </select>
+                        </select>    
 
-                        <input
-                            className={field}
-                            placeholder="Police Station"
-                            name="police_station"
-                            value={form.police_station}
-                            onChange={update}
-                        />
+                            <input
+                                className={`${field} bg-slate-50`}
+                                name="police_station"
+                                placeholder="Police Station"
+                                value={form.police_station || ""}
+                                readOnly
+                            />
 
-                        <input
+
+                        <select
                             className={field}
-                            placeholder="Corridor"
                             name="corridor"
+                            value={form.corridor}
                             onChange={update}
-                        />
+                        >
+                            <option value="">Select Corridor</option>
 
+                            <option value="Non-corridor">Non-corridor</option>
+                            <option value="ORR East 2">ORR East 2</option>
+                            <option value="ORR North 1">ORR North 1</option>
+                            <option value="Mysore Road">Mysore Road</option>
+                            <option value="Bellary Road 2">Bellary Road 2</option>
+                            <option value="Airport New South Road">Airport New South Road</option>
+                            <option value="ORR East 1">ORR East 1</option>
+                            <option value="Bellary Road 1">Bellary Road 1</option>
+                            <option value="Magadi Road">Magadi Road</option>
+                            <option value="Old Madras Road">Old Madras Road</option>
+                        </select>
                     </div>
 
                 </div>
@@ -322,13 +358,18 @@ export default function EventForm({location,setPrediction,setHistory}) {
                 </div>
 
                 <button
-                    onClick={submit}
-                    className="w-full bg-[#005BAC] hover:bg-[#00498c] text-white font-bold py-4 rounded-md transition"
-                >
+    onClick={submit}
+    disabled={!isFormComplete}
+    className={`w-full font-bold py-4 rounded-md transition ${
+        isFormComplete
+            ? "bg-[#005BAC] hover:bg-[#00498c] text-white"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+    }`}
+>
 
-                    RUN AI IMPACT ASSESSMENT
+    RUN AI IMPACT ASSESSMENT
 
-                </button>
+</button>
 
             </div>
 

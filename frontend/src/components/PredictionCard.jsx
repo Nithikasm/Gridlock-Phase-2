@@ -159,23 +159,11 @@ export default function PredictionCard({ prediction }) {
               value={recommendation?.["Diversion"]}
             />
           </div>
+          
 
-          <div className="mt-6 pt-4 border-t border-[#D8DEE6]">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">
-                Model Confidence
-              </span>
-
-              <span
-                className="font-semibold"
-                style={{ color: risk.color }}
-              >
-                {percentage}%
-              </span>
-            </div>
-          </div>
         </>
       )}
+      
     </div>
   );
 }
