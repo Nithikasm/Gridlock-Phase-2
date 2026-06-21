@@ -7,7 +7,9 @@ from pathlib import Path
 import pandas as pd
 from math import radians, sin, cos, sqrt, atan2
 
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent
 
 
 # ------------------------
