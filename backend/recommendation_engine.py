@@ -47,10 +47,7 @@ def generate_recommendations(probability, event_cause):
         elif recommendation["Police Deployment"] == "Medium":
             recommendation["Police Deployment"] = "High"
 
-    if event_cause == "procession":
-        recommendation["Barricades"] = "Required"
-
-    if event_cause == "protest":
+    if event_cause in ["procession", "protest"] and probability >= 0.30:
         recommendation["Barricades"] = "Required"
 
     if event_cause == "construction" and probability >= 0.60:

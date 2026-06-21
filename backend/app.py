@@ -5,6 +5,9 @@ import joblib
 from backend.recommendation_engine import generate_recommendations
 from pathlib import Path
 
+import pandas as pd
+from math import radians, sin, cos, sqrt, atan2
+
 BASE_DIR = Path(__file__).resolve().parent
 
 
@@ -14,10 +17,55 @@ BASE_DIR = Path(__file__).resolve().parent
 
 model = joblib.load(BASE_DIR / "road_closure_model.pkl")
 
+events_df = pd.read_csv(BASE_DIR / "cleaned_astram_event_data_final.csv")
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6371
+
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+
+    a = (
+        sin(dlat / 2) ** 2
+        + cos(radians(lat1))
+        * cos(radians(lat2))
+        * sin(dlon / 2) ** 2
+    )
+
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    return R * c
+
+events_df = events_df[
+    ["latitude", "longitude", "police_station"]
+].dropna()
+
+events_df = events_df.drop_duplicates()
+
 app = FastAPI(
     title="Bengaluru Police AI Traffic Command Center",
     version="1.0"
 )
+@app.get("/nearest-police-station")
+def nearest_police_station(lat: float, lon: float):
+
+    df = events_df.copy()
+
+    df["distance"] = df.apply(
+        lambda row: haversine(
+            lat,
+            lon,
+            row["latitude"],
+            row["longitude"]
+        ),
+        axis=1,
+    )
+
+    nearest = df.loc[df["distance"].idxmin()]
+
+    return {
+        "police_station": nearest["police_station"],
+        "distance_km": round(float(nearest["distance"]), 2)
+    }
 
 from fastapi.middleware.cors import CORSMiddleware
 

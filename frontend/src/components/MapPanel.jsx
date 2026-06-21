@@ -1,79 +1,79 @@
-import { useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { useState } from "react";
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import { getNearestPoliceStation } from "../services/api";
+
+function LocationMarker({ setLocation }) {
+  const [position, setPosition] = useState(null);
+
+  useMapEvents({
+    async click(e) {
+      const { lat, lng } = e.latlng;
+
+      setPosition([lat, lng]);
+
+      try {
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+  );
+
+  const data = await response.json();
+
+const policeResponse =
+  await getNearestPoliceStation(lat, lng);
+console.log(
+  "Police Station:",
+  policeResponse.data.police_station
+);
+setLocation({
+  latitude: lat,
+  longitude: lng,
+  address: data.display_name || "",
+  police_station:
+    policeResponse.data.police_station,
+});
+} catch (error) {
+  console.error("Reverse geocoding failed:", error);
+
+  setLocation({
+    latitude: lat,
+    longitude: lng,
+    address: "",
+  });
+}
+
+    console.log("Location Object:", {
+  latitude: lat,
+  longitude: lng,
+  police_station: policeResponse.data.police_station,
+});
+        },
+      });
+
+  return position ? <Marker position={position} /> : null;
+}
 
 export default function MapPanel({ setLocation }) {
-  const mapRef = useRef(null);
-  const markerRef = useRef(null);
-
-  useEffect(() => {
-    if (!window.mappls) return;
-
-    window.mappls.Map("map", {
-      center: [12.9716, 77.5946],
-      zoom: 11,
-    }, (map) => {
-
-      mapRef.current = map;
-
-      map.on("click", async (event) => {
-
-        const lat = event.latlng.lat;
-        const lng = event.latlng.lng;
-
-        if (markerRef.current) {
-          markerRef.current.remove();
-        }
-
-        markerRef.current = new window.mappls.Marker({
-          map,
-          position: {
-            lat,
-            lng,
-          },
-        });
-
-        let address = "";
-
-        try {
-          const response = await fetch(
-            `https://apis.mappls.com/advancedmaps/v1/${import.meta.env.VITE_MAPPLS_API_KEY}/rev_geocode?lat=${lat}&lng=${lng}`
-          );
-
-          const data = await response.json();
-
-          address =
-            data?.results?.[0]?.formatted_address ||
-            "";
-        } catch (error) {
-          console.error(
-            "Reverse geocoding failed:",
-            error
-          );
-        }
-
-        setLocation({
-          latitude: lat,
-          longitude: lng,
-          address,
-        });
-      });
-    });
-  }, [setLocation]);
-
   return (
-    <div className="bg-white border border-[#D8DEE6] rounded-lg overflow-hidden h-full">
+    <div className="bg-white rounded-lg border border-gray-300 p-4">
+      <h2 className="text-lg font-semibold mb-4">
+        LIVE EVENT LOCATION
+      </h2>
 
-      <div className="px-4 py-3 border-b border-[#D8DEE6]">
+      <MapContainer
+        center={[12.9716, 77.5946]}
+        zoom={11}
+        style={{ height: "500px", width: "100%" }}
+      >
+        <TileLayer
+          attribution='&copy; OpenStreetMap contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-700">
-          Live Event Location
-        </h3>
-
-      </div>
-
-      <div
-        id="map"
-        className="w-full h-[500px]"
-      />
+        <LocationMarker setLocation={setLocation} />
+      </MapContainer>
     </div>
   );
 }

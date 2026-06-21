@@ -28,17 +28,19 @@ export default function EventForm({location,setPrediction,setHistory}) {
         address: ""
     });
 
-    useEffect(() => {
-    if (!location) return;
+ useEffect(() => {
+  if (!location) return;
 
-    setFormData((prev) => ({
+  console.log("Form updated from map:", location);
+
+  setForm((prev) => ({
     ...prev,
     latitude: location.latitude,
     longitude: location.longitude,
-    address: location.address,
-    }));
-    }, [location]);
-
+    address: location.address || "",
+    police_station: location.police_station || "",
+  }));
+}, [location]);
 
     useEffect(() => {
 
@@ -64,29 +66,28 @@ export default function EventForm({location,setPrediction,setHistory}) {
 
     const submit = async () => {
 
-        const res = await predictEvent(form);
-
-        setPrediction(res.data);
-
-        setHistory(prev => [
-
-            {
-
-                time: new Date().toLocaleTimeString(),
-
-                event: form.event_type,
-
-                zone: form.zone,
-
-                prob: res.data.road_closure_probability
-
-            },
-
-            ...prev
-
-        ]);
-
+    const payload = {
+        ...form,
+        description_missing:
+            form.description.trim() === "" ? 1 : 0
     };
+
+    console.log(payload);
+
+    const res = await predictEvent(payload);
+
+    setPrediction(res.data);
+
+    setHistory(prev => [
+        {
+            time: new Date().toLocaleTimeString(),
+            event: form.event_type,
+            zone: form.zone,
+            prob: res.data.road_closure_probability
+        },
+        ...prev
+    ]);
+};
 
     const field =
         "w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-blue-600 focus:outline-none";
@@ -243,6 +244,7 @@ export default function EventForm({location,setPrediction,setHistory}) {
                             className={field}
                             placeholder="Police Station"
                             name="police_station"
+                            value={form.police_station}
                             onChange={update}
                         />
 

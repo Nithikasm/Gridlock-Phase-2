@@ -114,7 +114,7 @@ export default function PredictionCard({ prediction }) {
                   cy="110"
                   style={{
                     transition:
-                      "stroke-dashoffset 0.3s ease",
+                      "stroke-dashoffset 1.2s ease-in-out",
                   }}
                 />
               </svg>
