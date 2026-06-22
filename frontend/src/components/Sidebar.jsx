@@ -28,7 +28,7 @@ const menu = [
 
 const Sidebar = ({ activeSection, setActiveSection }) => {
     return (
-        <aside className="w-64 bg-white border-r border-[#D6DCE5] h-full">
+        <aside className="w-52 bg-white border-r border-[#D6DCE5] h-full">
 
             <div className="py-6">
 

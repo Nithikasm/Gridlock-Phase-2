@@ -100,6 +100,16 @@ export default function EventForm({location,setPrediction,setHistory}) {
 
     setPrediction(res.data);
 
+    setTimeout(() => {
+        console.log("SCROLL TRIGGERED");
+        document
+            .getElementById("dashboard-top")
+            ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            });
+        }, 100);
+
     setHistory(prev => [
         {
             time: new Date().toLocaleTimeString(),

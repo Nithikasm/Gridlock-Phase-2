@@ -71,8 +71,10 @@ export default function PredictionCard({ prediction }) {
   const risk = getRiskLevel();
 
   return (
-    <div className="bg-white border border-[#D8DEE6] rounded-lg p-6 h-full">
-
+    <div
+      id="prediction-section"
+      className="bg-white border border-[#D8DEE6] rounded-lg p-6 h-full"
+    >
       <div className="border-b border-[#D8DEE6] pb-3 mb-5">
         <h3 className="text-sm font-semibold tracking-wide text-gray-700 uppercase">
           AI Risk Engine
