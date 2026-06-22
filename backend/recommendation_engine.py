@@ -32,7 +32,7 @@ def generate_recommendations(probability, event_cause):
             "Road Closure": "Yes",
             "Police Deployment": "8–12 Officers",
             "Barricades": "6–10 Units",
-            "Diversion": "Required"
+            "Diversion": "Major Diversion"
         }
 
     # ----------------------------
