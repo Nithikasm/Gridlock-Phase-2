@@ -77,7 +77,7 @@ export default function PredictionCard({ prediction }) {
     >
       <div className="border-b border-[#D8DEE6] pb-3 mb-5">
         <h3 className="text-sm font-semibold tracking-wide text-gray-700 uppercase">
-          AI Risk Engine
+          Operational Risk Assessment
         </h3>
       </div>
 
