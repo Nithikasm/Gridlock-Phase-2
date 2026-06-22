@@ -6,6 +6,7 @@ import PredictionCard from "../components/PredictionCard";
 import HistoryTable from "../components/HistoryTable";
 import MapPanel from "../components/MapPanel";
 import StatCard from "../components/StatCard";
+import Footer from "../components/Footer";
 
 export default function Dashboard() {
 
@@ -102,6 +103,8 @@ export default function Dashboard() {
                 <HistoryTable history={history} />
             </div>
 
+        <Footer />
+        
         </DashboardLayout>
 
     );
