@@ -12,17 +12,17 @@ def generate_recommendations(probability, event_cause):
 
         recommendation = {
             "Road Closure": "No",
-            "Police Deployment": "Low",
-            "Barricades": "No",
-            "Diversion": "No"
+            "Police Deployment": "2–4 Officers",
+            "Barricades":  "0–2 Units",
+            "Diversion":  "Not Required"
         }
 
     elif probability < 0.60:
 
         recommendation = {
             "Road Closure": "Consider Partial Closure",
-            "Police Deployment": "Medium",
-            "Barricades": "Key Junctions",
+            "Police Deployment": "5–8 Officers",
+            "Barricades":  "3–5 Units",
             "Diversion": "Local Diversion"
         }
 
@@ -30,8 +30,8 @@ def generate_recommendations(probability, event_cause):
 
         recommendation = {
             "Road Closure": "Yes",
-            "Police Deployment": "High",
-            "Barricades": "Required",
+            "Police Deployment": "8–12 Officers",
+            "Barricades": "6–10 Units",
             "Diversion": "Required"
         }
 
