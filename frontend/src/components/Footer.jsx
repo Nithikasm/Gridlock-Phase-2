@@ -21,9 +21,7 @@ export default function Footer() {
             <p className="text-lg font-semibold">
               Gridlock Hackathon 2.0
             </p>
-            <p className="text-lg font-semibold">
-              Team StackZen
-            </p>
+            
             <p className="text-gray-300 mt-2">
               Official Hackathon Challenge
             </p>
@@ -34,7 +32,7 @@ export default function Footer() {
         <div className="border-t-2 border-white/25 my-6"></div>
 
         <p className="text-gray-200" font-medium>
-          Built by Hamsini & Nithika
+          Devolped by Team StackZen
         </p>
 
         <p className="text-gray-400 text-sm mt-4">

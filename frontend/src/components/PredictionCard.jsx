@@ -82,8 +82,14 @@ export default function PredictionCard({ prediction }) {
       </div>
 
       {!prediction ? (
-        <div className="h-[420px] flex items-center justify-center text-center text-gray-500">
-          Run an assessment to view operational risk analysis
+        <div className="flex flex-col items-center justify-center h-[320px] text-center px-6">
+          <p className="text-xl font-semibold text-gray-800 mb-4">
+            No Active Assessment
+          </p>
+
+          <p className="text-gray-500 max-w-xs leading-relaxed">
+            Enter event details to generate traffic impact analysis and operational recommendations.
+          </p>
         </div>
       ) : (
         <>
