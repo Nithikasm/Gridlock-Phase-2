@@ -83,7 +83,7 @@ export default function PredictionCard({ prediction }) {
 
       {!prediction ? (
         <div className="h-[420px] flex items-center justify-center text-center text-gray-500">
-          Run an assessment to view risk analysis
+          Run an assessment to view operational risk analysis
         </div>
       ) : (
         <>
