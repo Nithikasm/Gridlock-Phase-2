@@ -61,6 +61,7 @@ export default function MapPanel({ setLocation }) {
       <MapContainer
         center={[12.9716, 77.5946]}
         zoom={11}
+        scrollWheelZoom={false}
         style={{ height: "500px", width: "100%" }}
       >
         <TileLayer
